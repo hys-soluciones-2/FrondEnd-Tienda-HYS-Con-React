@@ -30,8 +30,17 @@ export const compraService = {
     totalMesActualSinFactura: () =>
         axiosInstance.get(`${API}/total-acumulado-sin`),
     eliminar: (fecha) => axiosInstance.delete(`${API}/eliminar/fecha/${fecha}`),
-    actualizar: (fecha) =>
-        axiosInstance.put(`${API}/actualizar/fecha/${fecha}`),
+    //actualizar: (fecha) =>
+    //    axiosInstance.put(`${API}/actualizar/fecha/${fecha}`),
+    actualizar: (fecha, datos) =>
+        axiosInstance.put(`${API}/actualizar/fecha/${fecha}`, datos),
+
+    actualizarCompra: (compra) =>
+        axiosInstance.put(
+            `${API}/actualizar/fecha/${compra.fechaCompra}`,
+            compra
+        ),
+
     eliminarPorFecha: (fecha) =>
         axiosInstance.delete(`${API}/eliminar/fecha/${fecha}`), // alias
     obtenerPorFecha: (fecha) =>

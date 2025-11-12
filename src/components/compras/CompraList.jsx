@@ -114,8 +114,10 @@ export default function CompraList({ rango, onEdit }) {
                     <tbody className="divide-y divide-gray-200">
                         {compras && compras.length > 0 ? (
                             compras.map((compra) => {
-                                const conFactura = compra.compraDelDiaConFactura || 0;
-                                const sinFactura = compra.compraDelDiaSinFactura || 0;
+                                const conFactura =
+                                    compra.compraDelDiaConFactura || 0;
+                                const sinFactura =
+                                    compra.compraDelDiaSinFactura || 0;
                                 return (
                                     <tr
                                         key={compra.idCompra}
@@ -131,7 +133,10 @@ export default function CompraList({ rango, onEdit }) {
                                             ${sinFactura.toFixed(2)}
                                         </td>
                                         <td className="px-4 py-2 font-medium">
-                                            ${(conFactura + sinFactura).toFixed(2)}
+                                            $
+                                            {(conFactura + sinFactura).toFixed(
+                                                2
+                                            )}
                                         </td>
                                         <td className="px-4 py-2 text-right space-x-2">
                                             <button
@@ -142,7 +147,9 @@ export default function CompraList({ rango, onEdit }) {
                                             </button>
                                             <button
                                                 onClick={() =>
-                                                    handleEliminar(compra.fechaCompra)
+                                                    handleEliminar(
+                                                        compra.fechaCompra
+                                                    )
                                                 }
                                                 className="text-red-600 hover:text-red-900 text-sm"
                                             >
@@ -154,7 +161,10 @@ export default function CompraList({ rango, onEdit }) {
                             })
                         ) : (
                             <tr>
-                                <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
+                                <td
+                                    colSpan="5"
+                                    className="px-4 py-8 text-center text-gray-500"
+                                >
                                     No hay compras registradas
                                 </td>
                             </tr>
