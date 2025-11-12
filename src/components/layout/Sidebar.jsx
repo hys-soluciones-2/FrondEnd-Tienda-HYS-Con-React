@@ -26,6 +26,24 @@ export default function Sidebar() {
                 >
                     💰 Ventas Diarias
                 </Link>
+                <Link
+                    to="/proveedores"
+                    className="block px-6 py-3 hover:bg-gray-700 transition"
+                >
+                    🧩 Proveedores
+                </Link>
+                <Link
+                    to="/productos"
+                    className="block px-6 py-3 hover:bg-gray-700 transition"
+                >
+                    📦 Productos
+                </Link>
+                <Link
+                    to="/pedidos"
+                    className="block px-6 py-3 hover:bg-gray-700 transition"
+                >
+                    📝 Pedidos
+                </Link>
             </nav>
         </div>
     );

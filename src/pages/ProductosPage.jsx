@@ -31,16 +31,47 @@ export default function ProductosPage() {
 
     const handleCrearProducto = async (e) => {
         e.preventDefault();
-        await productoService.create(formData);
-        cargarDatos();
-        setFormData({ nombreProducto: "", descripcion: "", precio: "" });
+        try {
+            const payload = {
+                nombreProducto: formData.nombreProducto,
+                descripcion: formData.descripcion,
+                precio: parseFloat(formData.precio) || 0,
+                estadoProducto: "DISPONIBLE",
+            };
+            await productoService.create(payload);
+            cargarDatos();
+            setFormData({ nombreProducto: "", descripcion: "", precio: "" });
+            alert("Producto creado");
+        } catch (error) {
+            console.error("Error al crear producto:", error);
+            alert(
+                "Error al crear producto: " +
+                    (error.response?.data || error.message)
+            );
+        }
     };
 
     const handleAsociar = async (e) => {
         e.preventDefault();
-        await productoService.associateProveedor(relacionData);
-        alert("Proveedor asociado correctamente");
-        setRelacionData({ idProducto: "", idProveedor: "", costoUnitario: "" });
+        try {
+            const payload = {
+                idProducto: parseInt(relacionData.idProducto, 10),
+                idProveedor: parseInt(relacionData.idProveedor, 10),
+            };
+            await productoService.associateProveedor(payload);
+            alert("Proveedor asociado correctamente");
+            setRelacionData({
+                idProducto: "",
+                idProveedor: "",
+                costoUnitario: "",
+            });
+        } catch (error) {
+            console.error("Error al asociar proveedor:", error);
+            alert(
+                "Error al asociar proveedor: " +
+                    (error.response?.data || error.message)
+            );
+        }
     };
 
     return (
@@ -93,6 +124,7 @@ export default function ProductosPage() {
                         className="p-2 border rounded"
                         step="0.01"
                     />
+
                     <button
                         type="submit"
                         className="md:col-span-3 bg-green-600 text-white py-2 rounded hover:bg-green-700"
@@ -184,6 +216,9 @@ export default function ProductosPage() {
                             <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                 Precio
                             </th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                Estado
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
@@ -195,6 +230,9 @@ export default function ProductosPage() {
                                 <td className="px-4 py-2">{p.descripcion}</td>
                                 <td className="px-4 py-2">
                                     ${p.precio?.toFixed(2)}
+                                </td>
+                                <td className="px-4 py-2">
+                                    {p.estadoProducto}
                                 </td>
                             </tr>
                         ))}

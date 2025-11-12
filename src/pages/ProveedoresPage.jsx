@@ -21,9 +21,24 @@ export default function ProveedoresPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await proveedorService.create(formData);
-        cargarProveedores();
-        setFormData({ nombre: "", contacto: "", telefono: "", email: "" });
+        try {
+            const payload = {
+                nombre: formData.nombre,
+                contacto: formData.contacto,
+                telefono: formData.telefono,
+                estadoProveedor: "ACTIVO",
+            };
+            await proveedorService.create(payload);
+            cargarProveedores();
+            setFormData({ nombre: "", contacto: "", telefono: "", email: "" });
+            alert("Proveedor creado");
+        } catch (error) {
+            console.error("Error al crear proveedor:", error);
+            alert(
+                "Error al crear proveedor: " +
+                    (error.response?.data || error.message)
+            );
+        }
     };
 
     return (
@@ -74,6 +89,7 @@ export default function ProveedoresPage() {
                         }
                         className="p-2 border rounded"
                     />
+                    {/*
                     <input
                         type="email"
                         placeholder="Email"
@@ -82,7 +98,7 @@ export default function ProveedoresPage() {
                             setFormData({ ...formData, email: e.target.value })
                         }
                         className="p-2 border rounded"
-                    />
+                    /> */}
                     <button
                         type="submit"
                         className="md:col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
@@ -106,7 +122,7 @@ export default function ProveedoresPage() {
                                 Teléfono
                             </th>
                             <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                                Email
+                                Estado
                             </th>
                         </tr>
                     </thead>
@@ -116,7 +132,9 @@ export default function ProveedoresPage() {
                                 <td className="px-4 py-2">{p.nombre}</td>
                                 <td className="px-4 py-2">{p.contacto}</td>
                                 <td className="px-4 py-2">{p.telefono}</td>
-                                <td className="px-4 py-2">{p.email}</td>
+                                <td className="px-4 py-2">
+                                    {p.estadoProveedor}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

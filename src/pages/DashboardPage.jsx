@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { ventaService } from "../services/ventaService";
 import { compraService } from "../services/compraService";
 
@@ -75,6 +76,47 @@ export default function Dashboard() {
                     <p className="text-2xl font-bold text-orange-600 mt-2">
                         ${datos.comprasSinMes.toFixed(2)}
                     </p>
+                </div>
+            </div>
+
+            {/* Accesos rápidos */}
+            <div className="bg-white p-5 rounded-lg shadow mb-6">
+                <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    Accesos rápidos
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <Link
+                        to="/proveedores"
+                        className="text-center bg-gray-800 text-white py-2 rounded hover:bg-gray-700"
+                    >
+                        Gestionar Proveedores
+                    </Link>
+                    <Link
+                        to="/productos"
+                        className="text-center bg-gray-800 text-white py-2 rounded hover:bg-gray-700"
+                    >
+                        Gestionar Productos
+                    </Link>
+                    <Link
+                        to="/pedidos"
+                        className="text-center bg-gray-800 text-white py-2 rounded hover:bg-gray-700"
+                    >
+                        Gestionar Pedidos
+                    </Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                    <Link
+                        to="/compras"
+                        className="text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+                    >
+                        Registrar/Ver Compras Diarias
+                    </Link>
+                    <Link
+                        to="/ventas"
+                        className="text-center bg-green-600 text-white py-2 rounded hover:bg-green-700"
+                    >
+                        Registrar/Ver Ventas Diarias
+                    </Link>
                 </div>
             </div>
         </div>
