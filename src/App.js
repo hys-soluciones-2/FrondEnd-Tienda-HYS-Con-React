@@ -6,6 +6,7 @@ import ProductosPage from "./pages/ProductosPage";
 import VentasDiariasPage from "./pages/VentasDiariasPage";
 import ComprasDiariasPage from "./pages/ComprasDiariasPage";
 import PedidosPage from "./pages/PedidosPage";
+import AgregarPedido from "./pages/AgregarPedido";
 
 function App() {
     return (
@@ -27,6 +28,11 @@ function App() {
                             element={<ComprasDiariasPage />}
                         />
                         <Route path="/pedidos" element={<PedidosPage />} />
+                        <Route
+                            exact
+                            path="/pedidoAgregar"
+                            element={<AgregarPedido />}
+                        />
                     </Routes>
                 </div>
             </div>
