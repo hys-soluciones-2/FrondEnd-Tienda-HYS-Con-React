@@ -12,7 +12,11 @@ export default function VentasDiariasPage() {
     const cargarVentas = async () => {
         try {
             const res = await ventaService.listarTodas();
-            setVentas(res.data || []);
+            const ventasOrdenadas = (res.data || []).sort(
+                (a, b) => new Date(b.fechaVenta) - new Date(a.fechaVenta)
+            );
+            setVentas(ventasOrdenadas);
+            //setVentas(res.data || []);
         } catch (error) {
             console.error("Error al cargar ventas:", error);
             setVentas([]);
@@ -26,7 +30,9 @@ export default function VentasDiariasPage() {
         } catch (error) {
             console.error("Error al cargar total del mes:", error);
             if (error.response?.status === 404) {
-                console.warn("Endpoint /total-mes-actual no existe en el backend. Mostrando 0.");
+                console.warn(
+                    "Endpoint /total-mes-actual no existe en el backend. Mostrando 0."
+                );
             }
             setTotalMes(0);
         }
@@ -52,21 +58,26 @@ export default function VentasDiariasPage() {
         } catch (error) {
             console.error("Error completo al registrar venta:", error);
             let mensaje = "Error al registrar la venta: ";
-            
-            if (error.message === 'Network Error') {
-                mensaje += "No se pudo conectar con el servidor. Verifica que:\n";
-                mensaje += "1. El backend esté corriendo en http://localhost:8080\n";
-                mensaje += "2. CORS esté configurado correctamente (@CrossOrigin)\n";
-                mensaje += "3. El endpoint /api/ventas-diarias exista en el backend";
+
+            if (error.message === "Network Error") {
+                mensaje +=
+                    "No se pudo conectar con el servidor. Verifica que:\n";
+                mensaje +=
+                    "1. El backend esté corriendo en http://localhost:8080\n";
+                mensaje +=
+                    "2. CORS esté configurado correctamente (@CrossOrigin)\n";
+                mensaje +=
+                    "3. El endpoint /api/ventas-diarias exista en el backend";
             } else if (error.response) {
-                mensaje += error.response.data?.message || 
-                          `Error ${error.response.status}: ${error.response.statusText}`;
+                mensaje +=
+                    error.response.data?.message ||
+                    `Error ${error.response.status}: ${error.response.statusText}`;
             } else if (error.request) {
                 mensaje += "No se recibió respuesta del servidor";
             } else {
                 mensaje += error.message;
             }
-            
+
             alert(mensaje);
         }
     };
