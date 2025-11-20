@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ventaService } from "../services/ventaService";
 import { compraService } from "../services/compraService";
+import { NumericFormat } from "react-number-format";
 
 export default function Dashboard() {
     const [datos, setDatos] = useState({
@@ -14,16 +15,25 @@ export default function Dashboard() {
         const cargarDatos = async () => {
             try {
                 const [ventas, comprasCon, comprasSin] = await Promise.all([
-                    ventaService.totalMesActual().catch(err => {
-                        console.warn("Endpoint total-mes-actual no disponible:", err);
+                    ventaService.totalMesActual().catch((err) => {
+                        console.warn(
+                            "Endpoint total-mes-actual no disponible:",
+                            err
+                        );
                         return { data: 0 };
                     }),
-                    compraService.totalMesActualConFactura().catch(err => {
-                        console.warn("Endpoint total-mes-actual-con-factura no disponible:", err);
+                    compraService.totalMesActualConFactura().catch((err) => {
+                        console.warn(
+                            "Endpoint total-mes-actual-con-factura no disponible:",
+                            err
+                        );
                         return { data: 0 };
                     }),
-                    compraService.totalMesActualSinFactura().catch(err => {
-                        console.warn("Endpoint total-mes-actual-sin-factura no disponible:", err);
+                    compraService.totalMesActualSinFactura().catch((err) => {
+                        console.warn(
+                            "Endpoint total-mes-actual-sin-factura no disponible:",
+                            err
+                        );
                         return { data: 0 };
                     }),
                 ]);
@@ -55,30 +65,48 @@ export default function Dashboard() {
                     <h3 className="text-lg font-medium text-gray-700">
                         Ventas Mes
                     </h3>
-                    <p className="text-2xl font-bold text-green-600 mt-2">
-                        ${datos.ventasMes.toFixed(2)}
+                    <p className="text-2xl font-bold text-blue-600 mt-2">
+                        <NumericFormat
+                            value={datos.ventasMes}
+                            displayType="text"
+                            thousandSeparator=","
+                            prefix="$"
+                            decimalScale={2}
+                            fixedDecimalScale
+                        />
                     </p>
                 </div>
-
                 <div className="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
                     <h3 className="text-lg font-medium text-gray-700">
                         Compras (Con Factura)
                     </h3>
                     <p className="text-2xl font-bold text-blue-600 mt-2">
-                        ${datos.comprasConMes.toFixed(2)}
+                        <NumericFormat
+                            value={datos.comprasConMes}
+                            displayType="text"
+                            thousandSeparator=","
+                            prefix="$"
+                            decimalScale={2}
+                            fixedDecimalScale
+                        />
                     </p>
                 </div>
-
                 <div className="bg-white p-5 rounded-lg shadow border-l-4 border-orange-500">
                     <h3 className="text-lg font-medium text-gray-700">
                         Compras (Sin Factura)
                     </h3>
-                    <p className="text-2xl font-bold text-orange-600 mt-2">
-                        ${datos.comprasSinMes.toFixed(2)}
+                    <p className="text-2xl font-bold text-blue-600 mt-2">
+                        <NumericFormat
+                            value={datos.comprasSinMes}
+                            displayType="text"
+                            thousandSeparator=","
+                            prefix="$"
+                            decimalScale={2}
+                            fixedDecimalScale
+                        />
                     </p>
                 </div>
             </div>
-
             {/* Accesos rápidos */}
             <div className="bg-white p-5 rounded-lg shadow mb-6">
                 <h2 className="text-lg font-semibold text-gray-800 mb-4">

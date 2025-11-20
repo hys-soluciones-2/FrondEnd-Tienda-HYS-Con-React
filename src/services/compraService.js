@@ -26,9 +26,9 @@ export const compraService = {
             `${API}/rango/sin-factura?inicio=${inicio}&fin=${fin}`
         ), // alias
     totalMesActualConFactura: () =>
-        axiosInstance.get(`${API}/total-acumulado-con`),
+        axiosInstance.get(`${API}/MesActualConFactura`),
     totalMesActualSinFactura: () =>
-        axiosInstance.get(`${API}/total-acumulado-sin`),
+        axiosInstance.get(`${API}/MesActualSinFactura`),
     eliminar: (fecha) => axiosInstance.delete(`${API}/eliminar/fecha/${fecha}`),
     //actualizar: (fecha) =>
     //    axiosInstance.put(`${API}/actualizar/fecha/${fecha}`),
